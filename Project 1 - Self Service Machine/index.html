@@ -18,15 +18,20 @@
       <section class="items">
         <h4>Pick your items</h4>
 
-        <div v-for="product in products" class="product">
+        <div
+          v-for="product in products"
+          class="product"
+          @click="product.active = !product.active"
+          :class=" {selected : product.active} "
+        >
           <div class="photo"><img :src="product.photo" /></div>
           <div class="description">
             <span class="name">{{product.name}}</span>
             <span class="price">{{product.price}}</span>
             <div class="quantity-area">
-              <button>-</button>
+              <button @click="product.quantity--">-</button>
               <span class="quantity">{{product.quantity}}</span>
-              <button>+</button>
+              <button @click="product.quantity++">+</button>
             </div>
           </div>
         </div>
