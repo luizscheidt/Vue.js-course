@@ -12,10 +12,16 @@ const toDoList = {
         this.newToDo = {
           done: false,
         };
+        localStorage.setItem("toDos", JSON.stringify(this.toDos));
       } else {
         alert("The new to do cannot be empry");
       }
     },
+  },
+  created() {
+    this.toDos = localStorage.getItem("toDos")
+      ? JSON.parse(localStorage.getItem("toDos"))
+      : this.toDos;
   },
 };
 
