@@ -23,6 +23,9 @@ const toDoList = {
       ? JSON.parse(localStorage.getItem("toDos"))
       : this.toDos;
   },
+  updated() {
+    localStorage.setItem("toDos", JSON.stringify(this.toDos));
+  },
 };
 
 Vue.createApp(toDoList).mount("#app");
