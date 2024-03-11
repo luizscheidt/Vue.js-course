@@ -1,5 +1,7 @@
 <template>
   <div>
+    <ScoreKeeper :winCount="this.winCount" :loseCount="this.loseCount" />
+
     <template v-if="this.question">
       <h1 v-html="this.question"></h1>
 
@@ -45,8 +47,14 @@
 </template>
 
 <script>
+import ScoreKeeper from "@/components/ScoreKeeper.vue";
+
 export default {
   name: "App",
+  components: {
+    ScoreKeeper,
+  },
+
   data() {
     return {
       question: undefined,
@@ -54,6 +62,8 @@ export default {
       correctAnswer: undefined,
       selectedAnswer: undefined,
       answerSubmitted: false,
+      winCount: 0,
+      loseCount: 0
     };
   },
 
@@ -63,6 +73,11 @@ export default {
         alert("You cant submit without choosing a answer");
       } else {
         this.answerSubmitted = true;
+        if (this.selectedAnswer === this.correctAnswer) {
+          this.winCount++
+        } else {
+          this.loseCount++
+        }
       }
     },
     getNewQuestion() {
