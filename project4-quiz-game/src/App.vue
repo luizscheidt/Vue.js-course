@@ -2,11 +2,10 @@
   <div>
     <h1 v-html="this.question"></h1>
 
-    <input type="radio" name="options" value="True" />
-    <label>True</label><br />
-
-    <input type="radio" name="options" value="False" />
-    <label>False</label><br />
+    <template v-for="answer in this.answers" :key="answer">
+      <input type="radio" name="answer" id="answer" value="index" />
+      <label for="answer" v-html="answer"></label><br />
+    </template>
 
     <button class="send" type="button">Send</button>
   </div>
@@ -26,7 +25,7 @@ export default {
   computed: {
     answers() {
       var answers = [...this.incorrectAnswers];
-      answers.push(this.correctAnswer);
+      answers.splice(Math.floor(Math.random() * 4), 0, this.correctAnswer);
       return answers;
     },
   },
