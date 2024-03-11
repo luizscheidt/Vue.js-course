@@ -22,6 +22,14 @@ export default {
       correctAnswer: undefined,
     };
   },
+
+  computed: {
+    answers() {
+      var answers = [...this.incorrectAnswers];
+      answers.push(this.correctAnswer);
+      return answers;
+    },
+  },
   created() {
     this.axios
       .get("https://opentdb.com/api.php?amount=1&type=multiple")
