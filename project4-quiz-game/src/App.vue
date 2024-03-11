@@ -24,8 +24,8 @@
         Send
       </button>
 
-      <section class="result" v-if="answerSubmitted">
-        <h4 v-if="selectedAnswer !== correctAnswer">
+      <section class="result" v-if="this.answerSubmitted">
+        <h4 v-if="this.selectedAnswer !== this.correctAnswer">
           &#10060; I'm sorry, you chose the wrong option. The correct answer
           was:
           {{ this.correctAnswer }}
@@ -36,7 +36,9 @@
           correct
         </h4>
 
-        <button class="send" type="button">Next question</button>
+        <button class="send" type="button" @click="this.getNewQuestion()">
+          Next question
+        </button>
       </section>
     </template>
   </div>
@@ -63,6 +65,18 @@ export default {
         this.answerSubmitted = true;
       }
     },
+    getNewQuestion() {
+      this.axios
+        .get("https://opentdb.com/api.php?amount=1&type=multiple")
+        .then((response) => {
+          this.question = response.data.results[0].question;
+          this.incorrectAnswers = response.data.results[0].incorrect_answers;
+          this.correctAnswer = response.data.results[0].correct_answer;
+        });
+      this.answerSubmitted = false;
+      this.selectedAnswer = undefined;
+      this.question = undefined;
+    },
   },
 
   computed: {
@@ -73,13 +87,7 @@ export default {
     },
   },
   created() {
-    this.axios
-      .get("https://opentdb.com/api.php?amount=1&type=multiple")
-      .then((response) => {
-        this.question = response.data.results[0].question;
-        this.incorrectAnswers = response.data.results[0].incorrect_answers;
-        this.correctAnswer = response.data.results[0].correct_answer;
-      });
+    this.getNewQuestion();
   },
 };
 </script>
