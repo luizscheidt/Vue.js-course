@@ -5,6 +5,7 @@
 
       <template v-for="answer in this.answers" :key="answer">
         <input
+          :disabled="this.answerSubmitted"
           type="radio"
           name="answer"
           id="value"
@@ -14,7 +15,29 @@
         <label for="answer" v-html="answer"></label><br />
       </template>
 
-      <button class="send" type="button" @click="submitAnswer()">Send</button>
+      <button
+        v-if="!answerSubmitted"
+        class="send"
+        type="button"
+        @click="submitAnswer()"
+      >
+        Send
+      </button>
+
+      <section class="result" v-if="answerSubmitted">
+        <h4 v-if="selectedAnswer !== correctAnswer">
+          &#10060; I'm sorry, you chose the wrong option. The correct answer
+          was:
+          {{ this.correctAnswer }}
+        </h4>
+
+        <h4 v-else>
+          &#9989; Congratulations! The answer "{{ this.correctAnswer }}" is
+          correct
+        </h4>
+
+        <button class="send" type="button">Next question</button>
+      </section>
     </template>
   </div>
 </template>
@@ -28,6 +51,7 @@ export default {
       incorrectAnswers: undefined,
       correctAnswer: undefined,
       selectedAnswer: undefined,
+      answerSubmitted: false,
     };
   },
 
@@ -36,9 +60,7 @@ export default {
       if (!this.selectedAnswer) {
         alert("You cant submit without choosing a answer");
       } else {
-        if (this.selectedAnswer === this.correctAnswer) {
-          alert("BOOOOOA");
-        }
+        this.answerSubmitted = true;
       }
     },
   },
