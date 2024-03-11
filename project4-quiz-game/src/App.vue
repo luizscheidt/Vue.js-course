@@ -1,13 +1,21 @@
 <template>
   <div>
-    <h1 v-html="this.question"></h1>
+    <template v-if="this.question">
+      <h1 v-html="this.question"></h1>
 
-    <template v-for="answer in this.answers" :key="answer">
-      <input type="radio" name="answer" id="answer" value="index" />
-      <label for="answer" v-html="answer"></label><br />
+      <template v-for="answer in this.answers" :key="answer">
+        <input
+          type="radio"
+          name="answer"
+          id="value"
+          :value="answer"
+          v-model="this.selectedAnswer"
+        />
+        <label for="answer" v-html="answer"></label><br />
+      </template>
+
+      <button class="send" type="button" @click="submitAnswer()">Send</button>
     </template>
-
-    <button class="send" type="button">Send</button>
   </div>
 </template>
 
@@ -19,7 +27,20 @@ export default {
       question: undefined,
       incorrectAnswers: undefined,
       correctAnswer: undefined,
+      selectedAnswer: undefined,
     };
+  },
+
+  methods: {
+    submitAnswer() {
+      if (!this.selectedAnswer) {
+        alert("You cant submit without choosing a answer");
+      } else {
+        if (this.selectedAnswer === this.correctAnswer) {
+          alert("BOOOOOA");
+        }
+      }
+    },
   },
 
   computed: {
