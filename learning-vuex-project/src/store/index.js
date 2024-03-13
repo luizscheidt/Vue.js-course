@@ -4,6 +4,7 @@ import axios from "axios";
 export default createStore({
   state: {
     counter: 0,
+    counterColor: "green",
   },
   mutations: {
     decreaseCounter(state, randomNumber) {
@@ -11,6 +12,9 @@ export default createStore({
     },
     increaseCounter(state, randomNumber) {
       state.counter += randomNumber;
+    },
+    setCounterColor(state, newValue) {
+      state.counterColor = newValue;
     },
   },
   actions: {
@@ -27,6 +31,9 @@ export default createStore({
       ).then((response) => {
         commit("decreaseCounter", response.data);
       });
+    },
+    setCounterColor({ commit }, newValue) {
+      commit("setCounterColor", newValue);
     },
   },
   getters: {

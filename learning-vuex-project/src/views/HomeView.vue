@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <div class="counter">
+    <div 
+    :style="{color: $store.state.counterColor}"
+    class="counter">
       {{$store.state.counter}}
     </div>
     <div class="counter-squared">
@@ -13,7 +15,10 @@
       <button @click='$store.dispatch("increaseCounter")'>+</button>
     </div>
     <div>
-      <input type="text">
+      <input 
+      v-model="counterColor"
+      type="text"
+      placeholder="Choose color for the counter">
     </div>
   </div>
 </template>
@@ -23,7 +28,16 @@
 
 export default {
   name: 'HomeView',
-
+  computed: {
+    counterColor: {
+      get() {
+        return this.$store.state.counterColor
+      },
+      set(newValue) {
+        this.$store.dispatch('setCounterColor', newValue)
+      }
+    }
+  }
 }
 </script>
 
