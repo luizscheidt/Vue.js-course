@@ -7,8 +7,18 @@
   </template>
   
   <script>
+
+  import axios from 'axios';
+
   export default {
     name: "App",
+
+    created() {
+      axios.get("https://fakestoreapi.com/products")
+      .then(response => {
+        console.log(response.data)
+      })
+    }
   };
   </script>
   
