@@ -4,9 +4,16 @@
     <div class="counter">
       {{$store.state.counter}}
     </div>
+    <div class="counter-squared">
+      {{ $store.state.counter }}
+      <sup>2</sup> = {{$store.getters.counterSquared}}
+    </div>
     <div class="buttons">
       <button @click='$store.dispatch("decreaseCounter")'>-</button>
       <button @click='$store.dispatch("increaseCounter")'>+</button>
+    </div>
+    <div>
+      <input type="text">
     </div>
   </div>
 </template>
