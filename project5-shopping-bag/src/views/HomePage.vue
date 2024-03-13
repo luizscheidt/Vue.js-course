@@ -6,7 +6,7 @@
           <div class="product-image" :style="{backgroundImage: 'url(' + item.image + ')'}"></div>
           <h4>{{item.title}}</h4>
           <p class="price">US$ {{item.price.toFixed(2)}}</p>
-          <button>Add to bag</button>
+          <button @click="addToCart(item)">Add to bag</button>
         </div>
 
       </div>
@@ -25,6 +25,12 @@
     computed: {
       products(){
         return this.$store.state.products;
+      }
+    },
+    methods: {
+      addToCart(item) {
+        item.quantity = 1;
+        this.$store.dispatch('addToCart', item)
       }
     }
   }

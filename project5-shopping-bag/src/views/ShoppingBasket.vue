@@ -2,17 +2,17 @@
   <div class="basket">
     <div class="items">
 
-      <div class="item">
+      <div class="item" v-for="cartItem in this.cartProducts" v-bind:key="cartItem.id">
         <div class="remove">Remove item</div>
-        <div class="photo"><img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" alt=""></div>
-        <div class="description">Mens Casual Premium Slim Fit T-Shirts </div>
+        <div class="photo"><img :src="cartItem.image" alt=""></div>
+        <div class="description">{{cartItem.title}} </div>
         <div class="price">
           <span class="quantity-area">
             <button disabled="">-</button>
             <span class="quantity">1</span>
-            <button>+</button>
+            <button >+</button>
           </span>
-          <span class="amount">US$ 22.30</span>
+          <span class="amount">US$ {{cartItem.price}}</span>
         </div>
       </div>
       <div class="grand-total"> Grand Total: US$ 22.30</div>
@@ -27,8 +27,13 @@ export default {
   name: 'ShoppingBasket',
 
   methods: {
-   
+
   },
+  computed: {
+    cartProducts() {
+      return this.$store.state.cartProducts
+    }
+  }
  
 }
 </script>
