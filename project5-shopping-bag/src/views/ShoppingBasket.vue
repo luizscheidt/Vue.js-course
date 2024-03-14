@@ -2,20 +2,25 @@
   <div class="basket">
     <div class="items">
 
+      <template v-if="cartProducts.length > 0">
       <div class="item" v-for="cartItem in this.cartProducts" v-bind:key="cartItem.id">
-        <div class="remove">Remove item</div>
+        <div class="remove" @click="$store.dispatch('removeFromCart', cartItem.id)">Remove item</div>
         <div class="photo"><img :src="cartItem.image" alt=""></div>
         <div class="description">{{cartItem.title}} </div>
         <div class="price">
           <span class="quantity-area">
-            <button disabled="">-</button>
-            <span class="quantity">1</span>
-            <button >+</button>
+            <button :disabled="cartItem.quantity<= 1" @click="cartItem.quantity--">-</button>
+            <span class="quantity">{{cartItem.quantity}}</span>
+            <button @click="cartItem.quantity++" >+</button>
           </span>
-          <span class="amount">US$ {{cartItem.price}}</span>
+          <span class="amount">US$ {{ (cartItem.price * cartItem.quantity).toFixed(2) }}</span>
         </div>
       </div>
       <div class="grand-total"> Grand Total: US$ 22.30</div>
+    </template>
+    <template v-else>
+      <h3>There are no items in your cart yet</h3>
+    </template>
 
     </div>
   </div>
