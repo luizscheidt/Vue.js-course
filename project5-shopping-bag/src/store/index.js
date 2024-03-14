@@ -10,14 +10,19 @@ export default createStore({
     loadProducts(state, response) {
       state.products = { ...response };
     },
+    loadCart(state, products) {
+      state.cartProducts = products;
+    },
     addToCart(state, item) {
       state.cartProducts.push(item);
+      localStorage.setItem("cartProducts", JSON.stringify(state.cartProducts));
     },
     removeFromCart(state, itemID) {
       let updatedBag = state.cartProducts.filter(
         (product) => product.id !== itemID
       );
       state.cartProducts = updatedBag;
+      localStorage.setItem("cartProducts", JSON.stringify(state.cartProducts));
     },
   },
   actions: {
@@ -25,6 +30,11 @@ export default createStore({
       axios.get("https://fakestoreapi.com/products").then((response) => {
         commit("loadProducts", response.data);
       });
+    },
+    loadCart({ commit }) {
+      if (localStorage.getItem("cartProducts")) {
+        commit("loadCart", JSON.parse(localStorage.getItem("cartProducts")));
+      }
     },
     addToCart({ commit }, item) {
       commit("addToCart", item);
