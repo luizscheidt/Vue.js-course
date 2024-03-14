@@ -2,11 +2,16 @@
     <div class="home">
       <div class="products">
   
-        <div class="product" v-for=" item in this.products" v-bind:key="item.id">
+        <div
+        :class="{inCart : isInCart(item)}" 
+          class="product" 
+          v-for=" item in this.products" 
+          v-bind:key="item.id">
           <div class="product-image" :style="{backgroundImage: 'url(' + item.image + ')'}"></div>
           <h4>{{item.title}}</h4>
           <p class="price">US$ {{item.price.toFixed(2)}}</p>
-          <button @click="addToCart(item)">Add to bag</button>
+          <button v-if="!isInCart(item)" @click="addToCart(item)">Add to cart</button>
+          <button v-else class="remove" >Remove from bag</button>
         </div>
 
       </div>
@@ -25,12 +30,19 @@
     computed: {
       products(){
         return this.$store.state.products;
-      }
+      },
+      cartProducts() {
+      return this.$store.state.cartProducts
+    
+  }
     },
     methods: {
       addToCart(item) {
         item.quantity = 1;
         this.$store.dispatch('addToCart', item)
+      },
+      isInCart(item) {
+        return this.cartProducts.find(product => product.id === item.id)
       }
     }
   }
@@ -62,7 +74,7 @@
             flex: 0 0 90%;
           }
   
-          &.inBag {
+          &.inCart {
             border: 1px solid #007bff;
           }
           
