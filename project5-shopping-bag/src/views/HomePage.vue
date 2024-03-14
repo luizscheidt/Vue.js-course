@@ -3,7 +3,7 @@
       <div class="products">
   
         <div
-        :class="{inCart : isInCart(item)}" 
+          :class="{inCart : isInCart(item)}" 
           class="product" 
           v-for=" item in this.products" 
           v-bind:key="item.id">
@@ -11,7 +11,7 @@
           <h4>{{item.title}}</h4>
           <p class="price">US$ {{item.price.toFixed(2)}}</p>
           <button v-if="!isInCart(item)" @click="addToCart(item)">Add to cart</button>
-          <button v-else class="remove" >Remove from bag</button>
+          <button v-else class="remove" @click="removeFromCart(item.id)">Remove from bag</button>
         </div>
 
       </div>
@@ -40,6 +40,9 @@
       addToCart(item) {
         item.quantity = 1;
         this.$store.dispatch('addToCart', item)
+      },
+      removeFromCart(itemID) {
+        this.$store.dispatch('removeFromCart', itemID)
       },
       isInCart(item) {
         return this.cartProducts.find(product => product.id === item.id)

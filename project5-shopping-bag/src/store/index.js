@@ -9,11 +9,15 @@ export default createStore({
   mutations: {
     loadProducts(state, response) {
       state.products = { ...response };
-      console.log(state.products);
     },
     addToCart(state, item) {
       state.cartProducts.push(item);
-      console.log(state.cartProducts);
+    },
+    removeFromCart(state, itemID) {
+      let updatedBag = state.cartProducts.filter(
+        (product) => product.id !== itemID
+      );
+      state.cartProducts = updatedBag;
     },
   },
   actions: {
@@ -24,6 +28,9 @@ export default createStore({
     },
     addToCart({ commit }, item) {
       commit("addToCart", item);
+    },
+    removeFromCart({ commit }, itemID) {
+      commit("removeFromCart", itemID);
     },
   },
   modules: {},
