@@ -19,6 +19,8 @@
   </template>
   
   <script>
+
+  import { mapState } from 'vuex';
   
   export default {
     name: 'HomePage',
@@ -27,15 +29,15 @@
         
       }
     },
-    computed: {
-      products(){
-        return this.$store.state.products;
-      },
-      cartProducts() {
-      return this.$store.state.cartProducts
-    
-  }
-    },
+    computed: 
+      mapState([
+        'products', 'cartProducts'
+      ]),
+      // products(){
+      //   return this.$store.state.products;
+      // },
+      // cartProducts() {
+      // return this.$store.state.cartProducts
     methods: {
       addToCart(item) {
         item.quantity = 1;

@@ -1,20 +1,23 @@
 <template>
     <div id="nav">
       <router-link to="/">Home</router-link> -
-      <router-link to="/basket">Shopping Bag ({{ $store.state.cartProducts.length }})</router-link>
+      <router-link to="/basket">Shopping Bag ({{ cartProducts.length }})</router-link>
     </div>
     <router-view />
   </template>
   
   <script>
-
+  import { mapState } from 'vuex';
 
   export default {
     name: "App",
 
     created() {
       this.$store.dispatch('loadProducts')
-    }
+    },
+    computed: 
+      mapState(['cartProducts'])
+    
   };
   </script>
   

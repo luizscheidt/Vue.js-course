@@ -22,6 +22,7 @@
 </template>
 
 <script>
+ import { mapState } from 'vuex';
   
 export default {
   name: 'ShoppingBasket',
@@ -29,11 +30,8 @@ export default {
   methods: {
 
   },
-  computed: {
-    cartProducts() {
-      return this.$store.state.cartProducts
-    }
-  }
+  computed: 
+      mapState(['cartProducts'])
  
 }
 </script>
